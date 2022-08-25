@@ -1,0 +1,7 @@
+.btn-warning {
+    background-color: rgb(211, 29, 211);
+}
+/* 마우스가 위로 올라갔을 때 실행된다. */
+.btn-warning:hover { 
+    background-color: blanchedalmond;
+}
