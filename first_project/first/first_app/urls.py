@@ -6,5 +6,6 @@ from . import views
 # 아래 urlpatterns에서는 path 를 ''으로 비워도 자동으로 'first_app/'이 추가된다.
 # 'second' 라고 한다면 'first_app/second' 가 추가된다.
 urlpatterns = [
-    path('', views.index, name='index')
+    path('', views.index, name='index'),
+    path('simple_view', views.simple_view),
 ]
