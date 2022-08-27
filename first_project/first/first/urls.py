@@ -23,5 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage),
     path('blog<int:id>', views.blog),
-    path('add/<str:n1>/<str:n2>', views.add)
+    path('add/<str:n1>/<str:n2>', views.add),
+    path('fruit/<str:color>', views.fruit),
+    path('privacy/<str:info>', views.privacy)
 ]
