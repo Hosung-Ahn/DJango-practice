@@ -6,3 +6,8 @@ def homepage(request) :
 
 def blog(request, id) :
     return HttpResponse(f"blog {id}")
+
+def add(request, n1, n2) :
+    n1 = float(n1)
+    n2 = float(n2)
+    return HttpResponse(n1+n2)
