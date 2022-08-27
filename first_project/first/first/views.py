@@ -1,5 +1,6 @@
 from curses.ascii import HT
-from django.http import Http404, HttpResponse, HttpResponseNotFound
+from django.http import Http404, HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.urls import reverse
 
 fruits = {
     'red' : 'apple',
@@ -32,9 +33,15 @@ def fruit(request, color) :
         result = "No page for that color!"
         return HttpResponseNotFound(result)
     
+def num_fruit(request, num) : 
+    fruits_lst = list(fruits.keys())
+    color = fruits_lst[num]
+    webpage = reverse('fruit-view', args=[color])
+    return HttpResponseRedirect(webpage)
+    
 def privacy(request, info) :
     try : 
         result = infos[info]
         return HttpResponse(result)
-    except :
+    except : 
         raise Http404("There is no infomation.")

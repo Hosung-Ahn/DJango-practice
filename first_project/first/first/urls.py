@@ -24,6 +24,7 @@ urlpatterns = [
     path('', views.homepage),
     path('blog<int:id>', views.blog),
     path('add/<str:n1>/<str:n2>', views.add),
-    path('fruit/<str:color>', views.fruit),
-    path('privacy/<str:info>', views.privacy)
+    path('fruit/<int:num>', views.num_fruit),
+    path('fruit/<str:color>', views.fruit, name='fruit-view'),
+    path('privacy/<str:info>', views.privacy),
 ]
