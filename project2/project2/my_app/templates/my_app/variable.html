@@ -15,11 +15,21 @@
     {% endfor %}
     </ul>
     <br>
+
     <ul>
         {% for k,v in fruit.items %}
             <li>{{k}}, {{v}}</li>
         {% endfor %}
     </ul>
     <h2>{{fruit.banana}}</h2>
+
+    <ul>
+        {% for k,v in fruit.items %}
+            {% if k == 'banana' %}
+                <li>The {{k}}'s color is {{v}}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
 </body>
 </html>
