@@ -12,3 +12,6 @@ def variable_view(request) :
            "fruit" : {"apple" : "red", "banana" : "yellow"}}
     # view 에서 template 로 매개변수를 전달할 수 있다.
     return render(request, 'my_app/variable.html', context=var)
+
+def template_inheritence_view(request) :
+    return render(request, 'my_app/template_inheritence.html')
