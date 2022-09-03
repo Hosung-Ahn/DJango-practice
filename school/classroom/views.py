@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView, CreateView, ListView
+from django.views.generic import TemplateView, FormView, CreateView, ListView, DetailView
 from . import forms
 from . import models
 
@@ -40,6 +40,11 @@ class TeacherListView(ListView) :
     model = models.Teacher
     # model_list.html 인 템플릿을 자동으로 찾는다.
     
-    # queryset = models.Teacher.objects.order_by('first_name')
+    # model에 있는 데이터 다루기
+    queryset = models.Teacher.objects.order_by('first_name')
     
     context_object_name = 'teacher_list'
+    
+class TeacherDetailView(DetailView) :
+    # 하나의 model entry 를 반환한다.
+    model = models.Teacher 

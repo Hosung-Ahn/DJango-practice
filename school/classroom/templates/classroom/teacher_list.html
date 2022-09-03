@@ -2,6 +2,6 @@
 
 <ul>
     {% for teacher in teacher_list %}
-        <li>{{teacher}}</li>
+        <li><a href="/classroom/detail/{{teacher.id}}">{{teacher}}</a></li>
     {% endfor %}
 </ul>
