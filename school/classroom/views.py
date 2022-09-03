@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView, CreateView, ListView, DetailView
+from django.views.generic import TemplateView, FormView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from . import forms
 from . import models
 
@@ -48,3 +48,12 @@ class TeacherListView(ListView) :
 class TeacherDetailView(DetailView) :
     # 하나의 model entry 를 반환한다.
     model = models.Teacher 
+    
+class TeacherUpdateView(UpdateView) :
+    model = models.Teacher
+    fields = '__all__'
+    success_url = reverse_lazy('classroom:list')
+    
+class TeacherDeleteView(DeleteView) :
+    model = models.Teacher
+    success_url = reverse_lazy('classroom:list')
