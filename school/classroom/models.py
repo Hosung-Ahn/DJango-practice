@@ -8,4 +8,4 @@ class Teacher(models.Model) :
     subject = models.CharField(max_length=30)
     
     def __str__(self) :
-        return f"{self.fisrt_name} {self.last_name} : {self.subject}"
+        return f"{self.first_name} {self.last_name} : {self.subject}"

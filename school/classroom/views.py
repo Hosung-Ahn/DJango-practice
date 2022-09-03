@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, CreateView
 from . import forms
+from . import models
 
 # Create your views here.
 
@@ -28,3 +29,9 @@ class ContactFormView(FormView) :
         print(form.cleaned_data)
         return super().form_valid(form)
         
+class TeacherCreateView(CreateView) :
+    # submit 시 model을 자동으로 저장해준다.
+    model = models.Teacher
+    # CreateView 는 model_form.html 인 템플릿을 자동으로 찾는다.
+    fields = "__all__"
+    success_url = reverse_lazy('classroom:thank')
