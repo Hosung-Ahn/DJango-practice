@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 # Create your models here.
 
+#admin 창을 custom 하기 위해 쓰이는 함수들로 당장은 크게 신경쓰지 않아도 된다.
 class MyAccountManager(BaseUserManager) :
     def create_user(self, first_name, last_name, username, email, password=None) :
         if not email :
@@ -61,8 +62,6 @@ class Account(AbstractBaseUser) :
     
     def __str__(self) :
         return self.email
-    
-    #admin 창을 custom 하기 위해 쓰이는 함수들로 당장은 크게 신경쓰지 않아도 된다.
     
     def has_perm(self, perm, obj=None) :
         return self.is_admin
