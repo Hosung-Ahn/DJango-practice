@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from traitlets import ObjectName
 from store.models import Product
 from .models import Cart, CartItem
 
@@ -38,5 +39,21 @@ def add_cart(request, product_id) :
     return redirect('cart')
         
 
-def cart(request) :
-    return render(request, 'store/carts.html')
+def cart(request, total=0, quantity=0, cart_items=None) :
+    try :
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+        cart_items = CartItem.objects.filter(cart=cart, is_active=True)
+        for cart_item in cart_items :
+            total += cart_item.product.price * cart_item.product.quantity
+            quantity += cart_item.quantity
+            
+    except :
+        pass
+    
+    context = {
+        "total" : total,
+        "quantity" : quantity,
+        "cart_items" : cart_items,
+    }
+        
+    return render(request, 'store/carts.html', context)
