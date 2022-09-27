@@ -5,9 +5,13 @@
     {% comment %} SECTION PAGE TOP {% endcomment %}
     <section class = "section-pagetop bg">
         <div class = 'container'>
-            <h2 class = 'title-page'>Our Store</h2>
+            {% if 'search' in request.path %}
+            <h2 class='text-center'>Search Result</h2>
+            {% else %}
+            <h2 class='text-center'>Store</h2>
+            {% endif %}
         </div>
-    </section>
+    </section> 
     {% comment %} SECTION INTRO END {% endcomment %}
 
     <!-- ========================= SECTION CONTENT ========================= -->
@@ -125,13 +129,16 @@
     </header><!-- sect-heading -->
     
     <div class="row">
+        {% if product_count <= 0 %}
+        <h1 class='text-center'>Products Are Not Founded</h1>
+        {% else %}
         {% for product in products %}
         <div class="col-md-4">
             <figure class="card card-product-grid">
                 <div class="img-wrap"> 
                     
                     <a href="{{product.get_url}}"><img src= {{product.images.url}}></a>
-                
+                    
                 </div> <!-- img-wrap.// -->
                 <figcaption class="info-wrap">
                     <div class="fix-height">
@@ -143,13 +150,14 @@
                     {% if product.stock <= 0 %}
                     <button class="btn btn-block btn-danger">Out of Stock</button>
                     {% else %}
-                        <a href="{% url 'add_cart' product.id %}" class="btn btn-block btn-primary">Add to cart </a>
+                    <a href="{% url 'add_cart' product.id %}" class="btn btn-block btn-primary">Add to cart </a>
                     {% endif %}
                     
                 </figcaption>
             </figure>
         </div> <!-- col.// -->
         {% endfor %}
+        {% endif %}
     </div> <!-- row end.// -->
     
     
@@ -164,7 +172,7 @@
             
             {% for i in products.paginator.page_range %}
             {% if i == products.number %}
-            <li class="page-item active"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
             {% else %}
             <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
             {% endif %}
