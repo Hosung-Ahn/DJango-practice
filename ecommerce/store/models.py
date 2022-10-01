@@ -1,6 +1,8 @@
+from tracemalloc import is_tracing
 from django.db import models
 from django.urls import reverse
 from category.models import Category
+
 
 # Create your models here.
 class Product(models.Model) :
@@ -21,3 +23,16 @@ class Product(models.Model) :
     def get_url(self) :
         return reverse('product_detail', args=[self.category.slug, self.slug])
     
+variation_category_choice = (
+    ('color', 'color'),
+    ('size', 'size')
+)
+class Variation(models.Model) :
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    variation_category = models.CharField(max_length=200, choices=variation_category_choice)
+    variation_value = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self) :
+        return str(self.product)
