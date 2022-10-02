@@ -34,7 +34,14 @@
                                     <div class="aside"><a href="{% url 'product_detail' cart_item.product.category.slug cart_item.product.slug %}"><img src= {{cart_item.product.images.url}} class="img-sm"></a></div>
                                     <figcaption class="info">   
                                         <a href="{% url 'product_detail' cart_item.product.category.slug cart_item.product.slug %}" class="title text-dark">{{cart_item.product.product_name}}</a>
-                                        <p class='text-muted small'>Color : <br> Size : </p>
+                                        <p class='text-muted small'>
+                                            {% if cart_item.variation.all %}
+                                            {% for item in cart_item.variation.all %}
+                                                {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }}
+                                                <br>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </p>
                                     </figcaption>
                                 </figure>
                             </td>
