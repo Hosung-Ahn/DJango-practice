@@ -1,3 +1,5 @@
+from curses.ascii import HT
+from statistics import quantiles
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from traitlets import ObjectName
@@ -35,16 +37,46 @@ def add_cart(request, product_id) :
         )
     cart.save()
     
-    try :
-        cart_item = CartItem.objects.get(product = product, cart = cart)
-        if len(product_variation) > 0 :
-            cart_item.variation.clear()
-            for item in product_variation :
-                cart_item.variation.add(item)
-                
-        cart_item.quantity += 1
-        cart_item.save()
-    except CartItem.DoesNotExist : 
+    is_cart_item_exists = CartItem.objects.filter(product=product, cart=cart).exists()
+    
+        
+    
+    
+    if is_cart_item_exists :
+        cart_item = CartItem.objects.filter(product=product, cart=cart)
+        # existing_vartiation -> database
+        # current variation -> product_variation
+        # item_id -> database
+        
+        ex_var_list = []
+        id = []
+        
+        for item in cart_item :
+            existing_variation = item.variation.all()
+            ex_var_list.append(list(existing_variation))
+            id.append(item.id)
+            
+            print("ex_var_list : \n")
+            print(ex_var_list)  
+            
+        print('product_variation :', product_variation)
+        
+        if product_variation in ex_var_list : 
+            # increase the cart item quantity
+            index = ex_var_list.index(product_variation)
+            item_id = id[index]
+            item = CartItem.objects.get(product=product, id=item_id)
+            item.quantity += 1
+            item.save()            
+            
+        else :
+            item = CartItem.objects.create(product=product, quantity=1, cart=cart)
+            if len(product_variation) > 0 :
+                item.variation.clear()
+                item.variation.add(*product_variation)
+    
+            item.save()
+    else : 
         cart_item = CartItem.objects.create(
             product = product,
             quantity = 1,
@@ -52,8 +84,7 @@ def add_cart(request, product_id) :
         )
         if len(product_variation) > 0 :
             cart_item.variation.clear()
-            for item in product_variation :
-                cart_item.variation.add(item)
+            cart_item.add(*product_variation)
         cart_item.save()
     return redirect('cart')
 
@@ -87,7 +118,6 @@ def cart(request, total=0, quantity=0, cart_items=None) :
         for cart_item in cart_items :
             total += cart_item.product.price * cart_item.quantity
             quantity += cart_item.quantity
-            
     except :
         pass
 
