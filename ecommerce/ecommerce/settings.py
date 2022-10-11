@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants as messages
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -138,3 +139,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # media files configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+MESSAGE_TAG = {
+    messages.ERROR : "danger",
+}
